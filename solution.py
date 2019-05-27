@@ -200,27 +200,55 @@ class Solution(object):
 
         if int(res) == x:
             return True
+
     # leecode13
     def romanToInt(self, s):
         """
         :type s: str
         :rtype: int
         """
-        romanInt={'I':1,'V':5,'X':10,'L':50,'C':100,'D':500,'M':1000}
+        romanInt = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
         num = []
         res = 0
         for i in range(len(s)):
             num.append(romanInt[s[i]])
 
-        for i in range(len(s)-1):
-            if num[i]<num[i+1]:
-                res -=num[i]
+        for i in range(len(s) - 1):
+            if num[i] < num[i + 1]:
+                res -= num[i]
             else:
                 res += num[i]
 
-        return res+num[len(s)-1]
+        return res + num[len(s) - 1]
 
+    # leetcode15
+    def threeSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        res = []
+        nums = sorted(nums)
+        print nums
+        for i in range(len(nums)):
+            start = i + 1
+            end = len(nums) - 1
+            if start >= end:
+                break
+            else:
+                while start < end:
+                    if nums[i] + nums[start] + nums[end] > 0:
+                        end -= 1
+                    elif nums[i] + nums[start] + nums[end] < 0:
+                        start += 1
+                    else:
+                        if [nums[i], nums[start], nums[end]] not in res:
+                            res.append([nums[i], nums[start], nums[end]])
+                        end -= 1
+                        start += 1
+
+        return res
 
 
 if __name__ == '__main__':
-    print Solution().romanToInt('MCMXCIV')
+    print Solution().threeSum([-2, 0, 1, 1, 2])
