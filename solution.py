@@ -123,7 +123,7 @@ class Solution(object):
                 return False
         return True
 
-    # leetcode5
+    # leetcode5,516
     def longestPalindrome1(self, s):
         """
         :type s: str
@@ -148,8 +148,79 @@ class Solution(object):
                         left = i
                         right = i + k - 1
 
-        return s[left:right + 1]
+        # 5 return
+        # return s[left:right + 1]
+        # 516 return
+        return right - left + 1
+
+    # leetcode7
+    def reverse(self, x):
+        """
+        :type x: int
+        :rtype: int
+        """
+        res = ''
+        if x > 0:
+            length = len(str(x))
+        else:
+            length = len(str(abs(x)))
+        # print length
+        x_tmp = abs(x)
+        for i in range(length):
+            tmp = x_tmp % 10
+            # print tmp
+            x_tmp = x_tmp / 10
+            # print x
+            res += str(tmp)
+
+        if int(res) > pow(2, 31):
+            return 0
+        elif x > 0:
+            return int(res)
+        else:
+            return -int(res)
+
+    # leetcode9
+    def isPalindrome(self, x):
+        """
+        :type x: int
+        :rtype: bool
+        """
+        if x < 0:
+            return False
+        res = ''
+        length = len(str(x))
+        if length < 2:
+            return True
+        x_tmp = abs(x)
+        for i in range(length):
+            tmp = x_tmp % 10
+            x_tmp = x_tmp / 10
+            res += str(tmp)
+
+        if int(res) == x:
+            return True
+    # leecode13
+    def romanToInt(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        romanInt={'I':1,'V':5,'X':10,'L':50,'C':100,'D':500,'M':1000}
+        num = []
+        res = 0
+        for i in range(len(s)):
+            num.append(romanInt[s[i]])
+
+        for i in range(len(s)-1):
+            if num[i]<num[i+1]:
+                res -=num[i]
+            else:
+                res += num[i]
+
+        return res+num[len(s)-1]
+
 
 
 if __name__ == '__main__':
-    print Solution().longestPalindrome1('aba')
+    print Solution().romanToInt('MCMXCIV')
