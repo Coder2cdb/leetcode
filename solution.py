@@ -249,6 +249,55 @@ class Solution(object):
 
         return res
 
+    # leetcode14
+    def longestCommonPrefix(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: str
+        """
+        if len(strs) == 0:
+            return ""
+
+        res = strs[0]
+        print res
+        for i in range(1, len(strs)):
+            while not strs[i].startswith(res):
+                print res
+                res = res[0:len(res) - 1]
+        return res
+
+    # leetcode16
+    def threeSumClosest(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+
+        if len(nums) < 3:
+            return 0
+        tmp = abs(target - (nums[0] + nums[1] + nums[2]))
+        res = nums[0] + nums[1] + nums[2]
+        nums = sorted(nums)
+        for i in range(len(nums)):
+            start = i + 1
+            end = len(nums) - 1
+            while start < end:
+                s = nums[i] + nums[start] + nums[end]
+                if s == target:
+                    return target
+                elif s < target:
+                    if target - s < tmp:
+                        tmp = target - s
+                        res = s
+                    start += 1
+                else:
+                    if s - target < tmp:
+                        tmp = s - target
+                        res = s
+                    end -= 1
+        return res
+
 
 if __name__ == '__main__':
-    print Solution().threeSum([-2, 0, 1, 1, 2])
+    print Solution().threeSumClosest([-1, 2, 1, -4], 1)
