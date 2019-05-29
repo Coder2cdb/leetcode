@@ -298,6 +298,54 @@ class Solution(object):
                     end -= 1
         return res
 
+    # leetcode12
+    def intToRoman(self, num):
+        """
+        :type num: int
+        :rtype: str
+        """
+        romans = ['M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I']
+        values = [1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1]
+        res = ''
+        for i in range(len(values)):
+            while num >= values[i]:
+                res += romans[i]
+                num -= values[i]
+        return res
+
+    # importantleetcode17
+    def letterCombinations(self, digits):
+        """
+        :type digits: str
+        :rtype: List[str]
+        dfs实践
+        """
+        def _dfs(num, string, res):
+            if num == length:
+                res.append(string)
+                return
+            if digits[num] == '0' or digits[num] == '1':
+                _dfs(num + 1, string, res)
+            for i in range(len(dicts[digits[num]])):
+                _dfs(num + 1, string + dicts[digits[num]][i], res)
+
+        res = []
+        dicts = {'2': 'abc', '3': 'def', '4': 'ghi', '5': 'jkl', '6': 'mno', '7': 'pqrs', '8': 'tuv', '9': 'wxyz',
+                 '1': '', '0': ''}
+        length = len(digits)
+        _dfs(0, '', res)
+        if res == [""]:
+            return []
+        return res
+
+    # leetcode18
+    def fourSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        
 
 if __name__ == '__main__':
-    print Solution().threeSumClosest([-1, 2, 1, -4], 1)
+    print Solution().letterCombinations('123')
