@@ -320,6 +320,7 @@ class Solution(object):
         :rtype: List[str]
         dfs实践
         """
+
         def _dfs(num, string, res):
             if num == length:
                 res.append(string)
@@ -345,7 +346,71 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
-        
+        if len(nums) < 3:
+            return
+        res = []
+        nums = sorted(nums)
+        for i in range(len(nums)):
+            for j in range(i + 1, len(nums)):
+                start = j + 1
+                end = len(nums) - 1
+                while start < end:
+                    if nums[i] + nums[j] + nums[start] + nums[end] == target:
+                        if [nums[i], nums[j], nums[start], nums[end]] not in res:
+                            res.append([nums[i], nums[j], nums[start], nums[end]])
+                        start += 1
+                        end -= 1
+                    elif nums[i] + nums[j] + nums[start] + nums[end] < target:
+                        start += 1
+                    else:
+                        end -= 1
+
+        return res
+
+    # leetcode20
+    def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        data = {'(': ')', '[': ']', '{': '}'}
+        keys = []
+        for i in range(len(s)):
+            if s[i] in data.keys():
+                keys.append(s[i])
+            else:
+                try:
+                    if s[i] == data[keys[-1]]:
+                        keys.pop(-1)
+                    else:
+                        return False
+                except:
+                    return False
+        if len(keys) == 0:
+            return True
+        else:
+            return False
+
+    # leetcode22
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+
+        def _dfs(left, right, out, res):
+            if left < 0 or right < 0 or left > right:
+                return
+            if left == 0 and right == 0:
+                res.append(out)
+                return
+            _dfs(left - 1, right, out + '(', res)
+            _dfs(left, right - 1, out + ')', res)
+
+        res = []
+        _dfs(n, n, '', res)
+        return res
+
 
 if __name__ == '__main__':
-    print Solution().letterCombinations('123')
+    print Solution().generateParenthesis(3)
