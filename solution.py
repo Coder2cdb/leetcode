@@ -430,6 +430,27 @@ class Solution(object):
             l2.next = self.mergeTwoLists(l1, l2.next)
             return l2
 
+    # leetcode24
+    def swapPairs(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        temp = ListNode(0)
+        temp.next = head
+        l = temp
+
+        while l.next !=None and l.next.next !=None:
+            first = l.next
+            second = l.next.next
+
+            first.next = second.next
+
+            second.next = first
+            l.next = second
+            l = l.next.next
+
+        return temp.next
 
 
 if __name__ == '__main__':
