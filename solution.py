@@ -391,13 +391,12 @@ class Solution(object):
         else:
             return False
 
-    # leetcode22
+    # importantleetcode22
     def generateParenthesis(self, n):
         """
         :type n: int
         :rtype: List[str]
         """
-
         def _dfs(left, right, out, res):
             if left < 0 or right < 0 or left > right:
                 return
@@ -452,6 +451,42 @@ class Solution(object):
 
         return temp.next
 
+    # leetcode25
+    def reverseKGroup(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        复杂的递归
+        """
+        pass
+
+    # leetcode26
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if len(nums) == 0:
+            return 0
+        j=0
+        for i in range(len(nums)):
+            if nums[i] != nums[j]:
+                j += 1
+                nums[j] = nums[i]
+
+        return j+1
+
+    # leetcode27
+    def removeElement(self, nums, val):
+        """
+        :type nums: List[int]
+        :type val: int
+        :rtype: int
+        """
+        pass
+
+
 
 if __name__ == '__main__':
-    print Solution().generateParenthesis(3)
+    print Solution().removeDuplicates([0,0,1,1,1,2,2,3,3,4])
