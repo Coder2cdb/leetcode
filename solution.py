@@ -484,9 +484,37 @@ class Solution(object):
         :type val: int
         :rtype: int
         """
+        if len(nums) == 0:
+            return 0
+        j = 0
+        for i in range(len(nums)):
+            if nums[i] != val:
+                nums[j] = nums[i]
+                j += 1
+
+        return j
+
+    # leetcode28
+    def strStr(self, haystack, needle):
+        """
+        :type haystack: str
+        :type needle: str
+        :rtype: int
+        """
+        pos = haystack.find(needle)
+        return pos
+
+    # leetcode29
+    def divide(self, dividend, divisor):
+        """
+        :type dividend: int
+        :type divisor: int
+        :rtype: int
+        """
+
         pass
 
 
 
 if __name__ == '__main__':
-    print Solution().removeDuplicates([0,0,1,1,1,2,2,3,3,4])
+    print Solution().strStr('hello','lll')
