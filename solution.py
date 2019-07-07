@@ -397,7 +397,6 @@ class Solution(object):
         :type n: int
         :rtype: List[str]
         """
-
         def _dfs(left, right, out, res):
             if left < 0 or right < 0 or left > right:
                 return
@@ -512,9 +511,54 @@ class Solution(object):
         :type divisor: int
         :rtype: int
         """
+        print abs(dividend)
+        if divisor == -1 and dividend == -2147483648:
+            return 2147483647
+        elif divisor == 1:
+            return dividend
+        res = 0
+        dvd = abs(dividend)
+        dvr = abs(divisor)
+        while dvd >= dvr:
+            tmp = dvr
+            s = 1
+            while dvd >= (tmp << 1):
+                tmp = tmp << 1
+                s <<= 1
 
-        pass
+            dvd = dvd - tmp
+            res = res + s
 
+        if (divisor < 0) ^ (dividend < 0):
+            return -res
+        return res
+
+    # leetcode30TODO
+    def findSubstring(self, s, words):
+        """
+        :type s: str
+        :type words: List[str]
+        :rtype: List[int]
+        """
+        def _contate_string(str_list, s, s_list):
+            if len(str_list) == 0:
+                s_list.append(s)
+                return
+            else:
+                for i in str_list:
+                    tmp = [t for t in str_list]
+                    s += i
+                    tmp.remove(i)
+                    _contate_string(tmp, s, s_list)
+
+        s_list = []
+        _contate_string(words, '', s_list)
+        res = []
+        for sl in s_list:
+            if s.find(sl):
+                res.append(s.find(sl))
+
+        return res
     def LCS(self, s1, s2):
         """
         计算两个字符串的最长公共子序列.
@@ -584,8 +628,4 @@ class Solution(object):
 
 
 if __name__ == '__main__':
-    B, C = Solution().LCS('ABCBDAB', 'BDCABA')
-    print B
-    print C
-    print C[-1, -1]
-    Solution().struct_sequence(B, B.shape[0] - 1, B.shape[1] - 1, 'ABCBDAB', 'BDCABA')
+    print Solution().findSubstring('barfoothefoobarman', ["foo", "bar"])
