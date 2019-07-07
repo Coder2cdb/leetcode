@@ -397,6 +397,7 @@ class Solution(object):
         :type n: int
         :rtype: List[str]
         """
+
         def _dfs(left, right, out, res):
             if left < 0 or right < 0 or left > right:
                 return
@@ -439,7 +440,7 @@ class Solution(object):
         temp.next = head
         l = temp
 
-        while l.next !=None and l.next.next !=None:
+        while l.next != None and l.next.next != None:
             first = l.next
             second = l.next.next
 
@@ -469,13 +470,13 @@ class Solution(object):
         """
         if len(nums) == 0:
             return 0
-        j=0
+        j = 0
         for i in range(len(nums)):
             if nums[i] != nums[j]:
                 j += 1
                 nums[j] = nums[i]
 
-        return j+1
+        return j + 1
 
     # leetcode27
     def removeElement(self, nums, val):
@@ -514,7 +515,77 @@ class Solution(object):
 
         pass
 
+    def LCS(self, s1, s2):
+        """
+        计算两个字符串的最长公共子序列.
+
+        Parameters
+        ----------
+        s1：字符串
+
+        s2：字符串
+
+        Returns
+        -------
+        B：二维Numpy数组
+            标记函数值组成的矩阵
+
+        C：二维Numpy数组
+            优化函数值组成的矩阵
+        """
+        import numpy as np
+        m = len(s1) + 1
+        n = len(s2) + 1
+        # 优化函数值矩阵
+        # C[i][j]表示s1的前i个元素和s2的前j个元素的最长公共子序列的长度
+        C = np.zeros((m, n))
+        # 标记函数值矩阵
+        # 记录当前优化函数值是从那个方向来的
+        # B中元素取值解释--0：左，1：上，2：左上
+        B = np.zeros((m, n))
+        for i in range(1, m):
+            for j in range(1, n):
+                if s1[i - 1] == s2[j - 1]:
+                    C[i][j] = C[i - 1][j - 1] + 1
+                    B[i][j] = 2
+                else:
+                    if C[i - 1][j] >= C[i][j - 1]:
+                        C[i][j] = C[i - 1][j]
+                        B[i][j] = 0
+                    else:
+                        C[i][j] = C[i][j - 1]
+                        B[i][j] = 1
+        return B, C
+
+    def struct_sequence(self, B, i, j, s1, s2):
+        """
+        根据标记函数值矩阵输出最长公共子序列
+
+        Parameters:
+        -----------
+        B：二维Numpy数组
+            标记函数值组成的矩阵
+
+        i,j：B矩阵中当前需要判断值的坐标
+
+        s1：字符串
+
+        s2：字符串
+        """
+        if i == 0 or j == 0:  # base case
+            return 0
+        if B[i, j] == 2:
+            self.struct_sequence(B, i - 1, j - 1, s1, s2)
+            print s1[i - 1]
+        elif B[i, j] == 1:
+            self.struct_sequence(B, i, j - 1, s1, s2)
+        elif B[i, j] == 0:
+            self.struct_sequence(B, i - 1, j, s1, s2)
 
 
 if __name__ == '__main__':
-    print Solution().strStr('hello','lll')
+    B, C = Solution().LCS('ABCBDAB', 'BDCABA')
+    print B
+    print C
+    print C[-1, -1]
+    Solution().struct_sequence(B, B.shape[0] - 1, B.shape[1] - 1, 'ABCBDAB', 'BDCABA')
