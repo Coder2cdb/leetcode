@@ -320,7 +320,6 @@ class Solution(object):
         :rtype: List[str]
         dfs实践
         """
-
         def _dfs(num, string, res):
             if num == length:
                 res.append(string)
@@ -540,40 +539,52 @@ class Solution(object):
         :type words: List[str]
         :rtype: List[int]
         """
-        def _contate_string(str_list, s, s_list):
-            if len(str_list) == 0:
-                s_list.append(s)
-                return
-            else:
-                for i in str_list:
-                    tmp = [t for t in str_list]
-                    s += i
-                    tmp.remove(i)
-                    _contate_string(tmp, s, s_list)
-
-        s_list = []
-        _contate_string(words, '', s_list)
+        if s == '':
+            return
+        if len(words) == 0:
+            return
+        wordsLen = len(words)
+        wordLen = len(words[0])
+        sLen = len(s)
         res = []
-        for sl in s_list:
-            if s.find(sl):
-                res.append(s.find(sl))
+        tmp = {}
+        for w in words:
+            if w not in tmp:
+                tmp[w] = 1
+            else:
+                tmp[w] += 1
+
+
+        for i in range(sLen-wordsLen*wordLen+1):
+            current = {}
+            j = 0
+            while j <= wordsLen:
+                word = s[i+j*wordLen:i+j*wordLen+wordLen]
+                if word not in words:
+                    break
+                if word not in current:
+                    current[word] = 1
+                else:
+                    current[word] += 1
+                if current[word] > tmp[word]:
+                    break
+                j += 1
+            if j == wordsLen:
+                res.append(i)
 
         return res
+
     def LCS(self, s1, s2):
         """
         计算两个字符串的最长公共子序列.
-
         Parameters
         ----------
         s1：字符串
-
         s2：字符串
-
         Returns
         -------
         B：二维Numpy数组
             标记函数值组成的矩阵
-
         C：二维Numpy数组
             优化函数值组成的矩阵
         """
@@ -604,16 +615,12 @@ class Solution(object):
     def struct_sequence(self, B, i, j, s1, s2):
         """
         根据标记函数值矩阵输出最长公共子序列
-
         Parameters:
         -----------
         B：二维Numpy数组
             标记函数值组成的矩阵
-
         i,j：B矩阵中当前需要判断值的坐标
-
         s1：字符串
-
         s2：字符串
         """
         if i == 0 or j == 0:  # base case
@@ -628,4 +635,6 @@ class Solution(object):
 
 
 if __name__ == '__main__':
-    print Solution().findSubstring('barfoothefoobarman', ["foo", "bar"])
+    s = "barfoothefoobarman"
+    words = ["foo", "bar"]
+    print Solution().findSubstring(s, words)
