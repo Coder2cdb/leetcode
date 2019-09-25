@@ -320,6 +320,7 @@ class Solution(object):
         :rtype: List[str]
         dfs实践
         """
+
         def _dfs(num, string, res):
             if num == length:
                 res.append(string)
@@ -396,6 +397,7 @@ class Solution(object):
         :type n: int
         :rtype: List[str]
         """
+
         def _dfs(left, right, out, res):
             if left < 0 or right < 0 or left > right:
                 return
@@ -554,12 +556,11 @@ class Solution(object):
             else:
                 tmp[w] += 1
 
-
-        for i in range(sLen-wordsLen*wordLen+1):
+        for i in range(sLen - wordsLen * wordLen + 1):
             current = {}
             j = 0
             while j <= wordsLen:
-                word = s[i+j*wordLen:i+j*wordLen+wordLen]
+                word = s[i + j * wordLen:i + j * wordLen + wordLen]
                 if word not in words:
                     break
                 if word not in current:
@@ -633,8 +634,26 @@ class Solution(object):
         elif B[i, j] == 0:
             self.struct_sequence(B, i - 1, j, s1, s2)
 
+    # ex.递归求解字符串的子串
+    def getSubset(self, arr, start, end, b):
+        s=''
+        if start == end:
+            for i in range(len(b)):
+                if b[i]:
+                    s += arr[i]
+            print s
+            print ' '
+            return
+        else:
+            b[start] = False
+            self.getSubset(arr, start + 1, end, b)
+            b[start] = True
+            self.getSubset(arr, start + 1, end, b)
+
 
 if __name__ == '__main__':
-    s = "barfoothefoobarman"
-    words = ["foo", "bar"]
-    print Solution().findSubstring(s, words)
+    from collections import defaultdict
+    d = defaultdict(list)
+    for k,v in {'cai':['li','mc'], 'min':'zi', 'chao':'pei'}.items():
+        d[k].append(v)
+    print d
