@@ -4,7 +4,7 @@
 """
 @version: v1.0
 @author: caiminchao
-@corp: caiminchao@corp.netease.com
+@mail: cmc930726@163.com
 @software: PyCharm，python 2.7
 @file: test
 @time: 2019/5/23 20:51
